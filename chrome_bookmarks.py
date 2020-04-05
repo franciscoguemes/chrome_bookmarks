@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 import configparser
 
+from error import InvalidBookmarkFolderException
 from jsonparser.JsonParser import JsonParser
 
 # Default configuration files
@@ -115,8 +116,11 @@ def main():
     # print(type(data["roots"]["bookmark_bar"]["children"][20]["children"][2]["children"]))
 
     parser = JsonParser(chrome_bookmarks_file)
-    bookmarks = parser.get_all_bookmarks_in_folder(bookmark_folder)
-    print(bookmarks)
+    try:
+        bookmarks = parser.get_all_bookmarks_in_folder(bookmark_folder)
+        print(bookmarks)
+    except InvalidBookmarkFolderException as e:
+        print(e)
 
 
 if __name__ == "__main__":

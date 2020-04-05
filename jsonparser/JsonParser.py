@@ -2,6 +2,8 @@
 
 import json
 
+from error.InvalidBookmarkFolderException import InvalidBookmarkFolderException
+
 
 class JsonParser:
     """ A JSON parser for the Chromium bookmarks in Linux.
@@ -46,7 +48,7 @@ class JsonParser:
                 break
 
         if not found:
-            raise Exception("The given bookmark_folder {} does not exists in the file".format(bookmark_folder))
+            raise InvalidBookmarkFolderException("The given bookmark_folder {} does not exists in the file {}".format(bookmark_folder, self.__chrome_bookmarks_file))
 
         bookmarks = parent_folder["children"]
         return self.__getUrls(bookmarks)

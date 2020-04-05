@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 import configparser
 
-import json
+from jsonparser.JsonParser import JsonParser
 
 # Default configuration files
 DEFAULT_CONFIG_FILE = "chrome_bookmarks.conf"
@@ -25,6 +25,8 @@ def process_arguments(args):
 
     msg = """Please provide the arguments in the following way: 
             $> chrome_bookmarks.py [--config=/path/to/the/config/file] BOOKMARK_FOLDER
+            ex: 
+            $> chrome_bookmarks.py --config=/home/francisco/conf/chrome_bookmarks/chrome_bookmarks.conf /Personal/MyBookmark
             """
 
     # A dictionary for holding the arguments once they are processed
@@ -63,7 +65,7 @@ def check_config(config):
         More info about config files on: https://docs.python.org/3/library/configparser.html
         """
         sys.exit(msg)
-    #TODO: Check the resto of the configuration parameters here...
+    #TODO: Check the rest of the configuration parameters here...
 
 
 # TODO: Handle error and corner cases...
@@ -92,23 +94,30 @@ def main():
     # print(f"The Chrome bookmarks file is: {chrome_bookmarks_file}")
     # print(f"The bookmark folder to open is: {bookmark_folder}")
 
-    with open(chrome_bookmarks_file) as f:
-        data = json.load(f)
+    # ##########################################################################################################
+    # ./chrome_bookmarks.py --config=/home/francisco/conf/chrome_bookmarks/chrome_bookmarks.conf /Personal/"Start new Spring Boot project"
+
+    # with open(chrome_bookmarks_file) as f:
+    #     data = json.load(f)
 
 
-    #TODO: Here is the JSON parsing ...
+    #
+    # # print(data)
+    #
+    # # Personal
+    # print(type(data["roots"]["bookmark_bar"]["children"][20]))
+    # print(data["roots"]["bookmark_bar"]["children"][20]["name"])
+    # # Manitu
+    # print(type(data["roots"]["bookmark_bar"]["children"][20]["children"][2]["name"]))
+    # print(data["roots"]["bookmark_bar"]["children"][20]["children"][2]["name"])
+    #
+    # # Bookmarks in /Personal/Manitu
+    # print(type(data["roots"]["bookmark_bar"]["children"][20]["children"][2]["children"]))
 
-    # print(data)
+    parser = JsonParser(chrome_bookmarks_file)
+    bookmarks = parser.get_all_bookmarks_in_folder(bookmark_folder)
+    print(bookmarks)
 
-    # Personal
-    print(type(data["roots"]["bookmark_bar"]["children"][20]))
-    print(data["roots"]["bookmark_bar"]["children"][20]["name"])
-    # Manitu
-    print(type(data["roots"]["bookmark_bar"]["children"][20]["children"][2]["name"]))
-    print(data["roots"]["bookmark_bar"]["children"][20]["children"][2]["name"])
-
-    # Bookmarks in /Personal/Manitu
-    print(type(data["roots"]["bookmark_bar"]["children"][20]["children"][2]["children"]))
 
 if __name__ == "__main__":
     main()

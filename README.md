@@ -39,7 +39,10 @@ The configuration file must have a section called "LOCAL" that contains the prop
 #                   LOCAL CONFIGURATION
 # ----------------------------------------------------------------------
 [LOCAL]
-CHROME_BOOKMARKS_FILE = /home/francisco/snap/chromium/current/.config/chromium/Default/Bookmarks 
+# This is a possible location for your Bookmarks file..
+CHROME_BOOKMARKS_FILE = /home/francisco/snap/chromium/current/.config/chromium/Default/Bookmarks
+# If not try with this ohter one ...
+# CHROME_BOOKMARKS_FILE = /home/francisco/snap/chromium/common/chromium/Default/Bookmarks
 ```
 
 ## Additional sources:

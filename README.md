@@ -9,25 +9,38 @@ contains the 10 URLs.
 ## Usage
 The application expects the following parameters:
 1. The configuration file (Optional). See more information in the "Configuration" section.
-2. The folder (folder path) that contains the links that we want to return by the application.
+2. The folder (folder path) inside the bookmarks structure that contains the links that we want to be 
+   returned by the application. For the folder path it is assumed that the bookmarks itself represent the 
+   root directory ("/"). Under the root directory there are two directories "__bookmark_bar__" for the bookmarks
+   bar and "__other__" for the bookmarks that are not visible in the bookmarks bar. 
+   The root directory can be optionally omitted from the folder path, but still you will have to specify if 
+   the bookmarks that you want are in the bookmarks bar or in the non-visible bookmarks.
    If a folder name in the folder path contain spaces or any other special character not handled
    by the command line, you should specify the folder name between double or simple quotes.
-   For the folder path it is assumed that the bookmarks bar represent the root directory ("/").
-   The root directory can be optionally omitted from the folder path.
+   
 
 ### Examples of usage:
 
 The following examples provide a configuration file.
 
 ```
-./chrome_bookmarks.py --config=/home/francisco/conf/chrome_bookmarks/chrome_bookmarks.conf /Personal/"Start new Spring Boot project"
+./chrome_bookmarks.py --config=/home/francisco/conf/chrome_bookmarks/chrome_bookmarks.conf /bookmark_bar/Personal/"Start new Spring Boot project"
 ```
 
 ```
-./chrome_bookmarks.py --config=/home/francisco/conf/chrome_bookmarks/chrome_bookmarks.conf Personal/"Start new Spring Boot project"
+./chrome_bookmarks.py --config=/home/francisco/conf/chrome_bookmarks/chrome_bookmarks.conf bookmark_bar/Personal/"Start new Spring Boot project"
 ```
 
-**Note**: The path of the bookmarks folder is equivalent in both examples.  
+**Note**: The path of the bookmarks folder is equivalent in both examples. The folder Personal is supposed to be in the bookmarks bar. Note that the
+folder is in double quotes because it contains characters (spaces) that are not handled correctly by the command line.
+
+```
+./chrome_bookmarks.py --config=/home/francisco/conf/chrome_bookmarks/chrome_bookmarks.conf /other/Programming/Python
+```
+
+```
+./chrome_bookmarks.py --config=/home/francisco/conf/chrome_bookmarks/chrome_bookmarks.conf other/Programming/Python
+```
 
 
 ## Configuration

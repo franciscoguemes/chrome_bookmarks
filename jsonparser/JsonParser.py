@@ -10,6 +10,9 @@ class JsonParser:
     """
 
     PATH_SEPARATOR = "/"
+    ROOTS = "roots"
+    BOOKMARK_BAR = "bookmark_bar"
+    OTHER = "other"
 
     def __init__(self, chrome_bookmarks_file):
         self.__chrome_bookmarks_file = chrome_bookmarks_file
@@ -24,14 +27,26 @@ class JsonParser:
     def get_all_bookmarks_in_folder(self, bookmark_folder):
         paths = bookmark_folder.split(self.PATH_SEPARATOR)
 
-        # In ase of having the first character of the string as the PATH_SEPARATOR, the first path is empty
+        # In case of having the first character of the string as the PATH_SEPARATOR, the first path is empty
         if not paths[0]:
             del paths[0]
+
+        print(f"paths: {paths}")
 
         with open(self.__chrome_bookmarks_file) as f:
             data = json.load(f)
 
-        parent_folder = data["roots"]["bookmark_bar"]
+        parent_folder = None
+        if paths[0] == self.OTHER:
+            parent_folder = data[self.ROOTS][self.OTHER]
+            del paths[0]
+        elif paths[0] == self.BOOKMARK_BAR:
+            parent_folder = data[self.ROOTS][self.BOOKMARK_BAR]
+            del paths[0]
+        else:
+            raise InvalidBookmarkFolderException(
+                "The given bookmark_folder {} must start with 'other' or 'bookmark_bar' as parent folder".format(bookmark_folder))
+
         found = False
         for p in paths:
             #print(f"Analising string: {p}")
